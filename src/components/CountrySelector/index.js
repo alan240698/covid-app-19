@@ -1,18 +1,27 @@
 import React from 'react';
-import { FormControl, InputLabel, NativeSelect } from '@material-ui/core';
+import { FormControl, FormHelperText, InputLabel, NativeSelect } from '@material-ui/core';
 // Component con này sẽ nhận vào hai props từ cha là : value, handleOnChange
-const CountrySelector = ({value, handleOnChange}) => {
+// Lấy props countries truyền từ cha qua
+const CountrySelector = ({value, handleOnChangeProps, countriesProps}) => {
     return  <FormControl>
                 <InputLabel htmlFor="country-selector" shrink>Quốc gia</InputLabel>
-                <NativeSelect>
+                <NativeSelect
                     value={value}
-                    onChange={handleOnChange}
+                    onChange={handleOnChangeProps}
                     inputProps={{
                         name: 'country',
                         id: 'country-selector'
                         // country-selector đem lên đặt cho htmlFor để hai cái nó gộp với nhau làm một
                     }}
+                >
+                {/* map sẽ loop qua countriesProps với các index 0..., với các giá trị là một object tương ứng */}
+                  {
+                        countriesProps.map((country) => {
+                            return <option value={country.ISO2.toLowerCase()}>{country.Country}</option>
+                        })
+                  }
                 </NativeSelect>
+                <FormHelperText>Lựa chọn quốc gia</FormHelperText>
             </FormControl>
         
 }
