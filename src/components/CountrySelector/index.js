@@ -1,12 +1,19 @@
 import React from 'react';
-import { FormControl, FormHelperText, InputLabel, NativeSelect } from '@material-ui/core';
+import { FormControl, FormHelperText, InputLabel, NativeSelect, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme)=>({
+    formControl: {
+        margin: `${theme.spacing(3)}px 0`,
+    }
+}));
 // Component con này sẽ nhận vào hai props từ cha là : value, handleOnChange
 // Lấy props countries truyền từ cha qua
-const CountrySelector = ({value, handleOnChangeProps, countriesProps}) => {
-    return  <FormControl>
+const CountrySelector = ({valueProps, handleOnChangeProps, countriesProps}) => {
+    const styles = useStyles();
+    return  <FormControl className={styles.formControl}>
                 <InputLabel htmlFor="country-selector" shrink>Quốc gia</InputLabel>
                 <NativeSelect
-                    value={value}
+                    value={valueProps}
                     onChange={handleOnChangeProps}
                     inputProps={{
                         name: 'country',
@@ -17,7 +24,7 @@ const CountrySelector = ({value, handleOnChangeProps, countriesProps}) => {
                 {/* map sẽ loop qua countriesProps với các index 0..., với các giá trị là một object tương ứng */}
                   {
                         countriesProps.map((country) => {
-                            return <option value={country.ISO2.toLowerCase()}>{country.Country}</option>
+                            return <option key={country.ISO2} value={country.ISO2.toLowerCase()}>{country.Country}</option>
                         })
                   }
                 </NativeSelect>
